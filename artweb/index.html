@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>青綠未央</title>
+  <link rel="icon" type="png" href="https://jsh.dafuntea.com/%E5%8E%BB%E8%83%8C%E7%9A%84%E4%B8%8B%E8%BC%89.png">
+  <style>
+    :root {
+      --bg-dark: #121316;
+      --card-bg: #1e1f24;
+      --card-hover: #2a2b32;
+      --card-active: #32353e;
+      --accent-blue: #0b57d0;
+      --accent-blue-hover: #1b65e0;
+      --accent-pill: #a8c7fa;
+      --text-main: #e3e2e6;
+      --text-sub: #c4c6d0;
+      --text-muted: #8e919e;
+      --border-color: #2e3038;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      background-color: #1a1b1f;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .chrome-logo {
+      width: 28px;
+      height: 28px;
+      background: conic-gradient(#ea4335 0 120deg, #4285f4 120deg 240deg, #34a853 240deg 360deg);
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chrome-logo::after {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background: #fbbc05;
+      border: 3px solid #fff;
+      border-radius: 50%;
+    }
+
+    .btn-download {
+      background-color: var(--accent-blue);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-download:hover {
+      background-color: var(--accent-blue-hover);
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 32px 20px 32px;
+      align-items: center;
+    }
+
+    /* 淡入淡出轉場設定 */
+    .fade-content {
+      transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-content.fade-out {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .info-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .feature-title {
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #ffffff;
+      min-height: 90px;
+    }
+
+    .feature-description {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-sub);
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .step-item {
+      font-size: 15px;
+      color: var(--text-sub);
+      display: flex;
+      gap: 8px;
+    }
+
+    .step-num {
+      color: var(--text-sub);
+    }
+
+    .settings-guide {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-pill);
+      color: #040e24;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--accent-pill);
+      border: 1px solid var(--accent-pill);
+      padding: 10px 24px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(168, 199, 250, 0.1);
+    }
+
+    .preview-section {
+      width: 100%;
+      height: 420px;
+      background-color: #28292e;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border: 1px solid var(--border-color);
+      cursor: zoom-in;
+    }
+
+    .preview-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-container {
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 32px 32px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .cards-wrapper {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      flex: 1;
+      padding-bottom: 8px;
+    }
+
+    .cards-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .cards-wrapper::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    .card {
+      min-width: 240px;
+      height: 90px;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .card:hover {
+      background-color: var(--card-hover);
+    }
+
+    .card.active {
+      background-color: var(--card-active);
+      border-color: var(--accent-pill);
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-width: 130px;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--accent-pill);
+      font-weight: 500;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .card-thumb {
+      width: 80px;
+      height: 64px;
+      border-radius: 6px;
+      background-color: #333;
+      object-fit: cover;
+    }
+
+    .nav-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #2b2c30;
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color 0.2s;
+    }
+
+    .nav-arrow:hover {
+      background-color: #3d3e44;
+    }
+
+    /* 圖片放大 modal 樣式 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: zoom-out;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      font-size: 36px;
+      color: #ffffff;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      transition: opacity 0.2s;
+    }
+
+    .modal-close:hover {
+      opacity: 0.7;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+        padding-top: 20px;
+      }
+
+      .preview-section {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+        <img src="https://jsh.dafuntea.com/去背的下載.png" style="height: 24px;" alt="">
+      <span>弘明實驗高級中學 <br>美術教學參觀日</span>
+    </div>
+    <p style="cursor: pointer;text-decoration: underline;" title="點按前往集章活動頁面" onclick="location.href='https://artcoc.dafuntea.com'">集章活動</p>
+  </header>
+
+  <main>
+    <div class="info-section fade-content" id="info-section">
+      <h1 class="feature-title" id="main-title">載入中...</h1>
+      <p class="feature-description" id="main-description"></p>
+      
+      <div class="steps-list" id="main-steps"></div>
+      
+      <p class="settings-guide" id="main-guide"></p>
+    </div>
+
+    <div class="preview-section" id="preview-container" title="點擊放大檢視">
+      <img id="main-preview-img" class="preview-image fade-content" src="" alt="Feature Preview">
+    </div>
+  </main>
+
+  <div class="carousel-container">
+    <button class="nav-arrow" id="btn-prev">❮</button>
+    <div class="cards-wrapper" id="cards-container"></div>
+    <button class="nav-arrow" id="btn-next">❯</button>
+  </div>
+
+  <!-- 放大檢視 Modal 燈箱 -->
+  <div class="modal-overlay" id="image-modal">
+    <button class="modal-close" id="modal-close-btn">&times;</button>
+    <img class="modal-content" id="modal-img" src="" alt="Zoomed Preview">
+  </div>
+
+  <script>
+    let cardsData = [];
+    let currentIndex = 0;
+    let isTransitioning = false; // 防止快速連續點擊造成的動畫衝突
+
+    const infoSection = document.getElementById('info-section');
+    const mainTitle = document.getElementById('main-title');
+    const mainDescription = document.getElementById('main-description');
+    const mainSteps = document.getElementById('main-steps');
+    const mainGuide = document.getElementById('main-guide');
+    const mainPreviewImg = document.getElementById('main-preview-img');
+    const cardsContainer = document.getElementById('cards-container');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+
+    // Modal 元件
+    const previewContainer = document.getElementById('preview-container');
+    const imageModal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+
+    async function initApp() {
+      try {
+        const response = await fetch('data.json');
+        if (!response.ok) {
+          throw new Error(`HTTP 錯誤！狀態碼: ${response.status}`);
+        }
+        cardsData = await response.json();
+        
+        if (cardsData.length > 0) {
+          renderCards(cardsData);
+          selectCard(0, false); // 首次載入不播放淡出
+        }
+      } catch (error) {
+        console.error('無法載入卡片資料:', error);
+        mainTitle.textContent = '資料載入失敗';
+        mainDescription.textContent = '請檢查 data.json 檔案路徑或本地伺服器環境。';
+      }
+    }
+
+    function renderCards(data) {
+      cardsContainer.innerHTML = '';
+      data.forEach((item, index) => {
+        const cardEl = document.createElement('div');
+        cardEl.className = `card ${index === currentIndex ? 'active' : ''}`;
+        cardEl.onclick = () => selectCard(index);
+
+        cardEl.innerHTML = `
+          <div class="card-info">
+            <span class="card-subtitle">${item.cardSubtitle}</span>
+            <span class="card-title">${item.cardTitle}</span>
+          </div>
+          <img class="card-thumb" src="${item.cardImage}" alt="${item.cardTitle}">
+        `;
+
+        cardsContainer.appendChild(cardEl);
+      });
+    }
+
+    function selectCard(index, animate = true) {
+      if (!cardsData || cardsData.length === 0 || isTransitioning) return;
+
+      currentIndex = index;
+      const data = cardsData[currentIndex];
+
+      // 更新下方卡片選取狀態
+      const allCards = cardsContainer.querySelectorAll('.card');
+      allCards.forEach((card, idx) => {
+        if (idx === currentIndex) {
+          card.classList.add('active');
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else {
+          card.classList.remove('active');
+        }
+      });
+
+      // 更新內容的內部函式
+      const updateContent = () => {
+        mainTitle.textContent = data.mainTitle;
+        mainDescription.textContent = data.mainDescription;
+        mainGuide.textContent = data.settingsGuide;
+        mainPreviewImg.src = data.previewImage;
+
+        mainSteps.innerHTML = '';
+        if (data.steps && data.steps.length > 0) {
+          data.steps.forEach((step, idx) => {
+            const stepEl = document.createElement('div');
+            stepEl.className = 'step-item';
+            stepEl.innerHTML = `<span class="step-num">${idx + 1}.</span> <span>${step}</span>`;
+            mainSteps.appendChild(stepEl);
+          });
+        }
+      };
+
+      if (animate) {
+        isTransitioning = true;
+        // 1. 淡出
+        infoSection.classList.add('fade-out');
+        mainPreviewImg.classList.add('fade-out');
+
+        // 2. 等待淡出 completion (250ms) 後替換內容，再淡入
+        setTimeout(() => {
+          updateContent();
+          infoSection.classList.remove('fade-out');
+          mainPreviewImg.classList.remove('fade-out');
+          isTransitioning = false;
+        }, 250);
+      } else {
+        updateContent();
+      }
+    }
+
+    btnPrev.addEventListener('click', () => {
+      if (cardsData.length === 0 || isTransitioning) return;
+      let newIndex = currentIndex - 1;
+      if (newIndex < 0) newIndex = cardsData.length - 1;
+      selectCard(newIndex);
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (cardsData.length === 0 || isTransitioning) return;
+      let newIndex = currentIndex + 1;
+      if (newIndex >= cardsData.length) newIndex = 0;
+      selectCard(newIndex);
+    });
+
+    // Modal 邏輯
+    function openModal() {
+      if (!mainPreviewImg.src) return;
+      modalImg.src = mainPreviewImg.src;
+      imageModal.classList.add('active');
+    }
+
+    function closeModal() {
+      imageModal.classList.remove('active');
+    }
+
+    previewContainer.addEventListener('click', openModal);
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal || e.target === modalImg) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    initApp();
+  </script>
+</body>
+</html>
