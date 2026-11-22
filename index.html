@@ -3,580 +3,637 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>青綠未央</title>
-  <link rel="icon" type="png" href="https://jsh.dafuntea.com/%E5%8E%BB%E8%83%8C%E7%9A%84%E4%B8%8B%E8%BC%89.png">
+  <title>青綠未央 — 115美術教學參觀日</title>
+  <link rel="icon" type="image/png" href="https://jsh.dafuntea.com/%E5%8E%BB%E8%83%8C%E7%9A%84%E4%B8%8B%E8%BC%89.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg-dark: #121316;
-      --card-bg: #1e1f24;
-      --card-hover: #2a2b32;
-      --card-active: #32353e;
-      --accent-blue: #0b57d0;
-      --accent-blue-hover: #1b65e0;
-      --accent-pill: #a8c7fa;
-      --text-main: #e3e2e6;
-      --text-sub: #c4c6d0;
-      --text-muted: #8e919e;
-      --border-color: #2e3038;
+      /* 預設動態變數 */
+      --bg-current: #f4f9f8;
+      --text-current: #0d3b2e;
+      --title-current: #007a68;
+      --pill-bg-current: rgba(0, 122, 104, 0.12);
+      --pill-text-current: #006052;
+      --btn-bg-current: #008f7a;
+      --btn-text-current: #ffffff;
+
+      --font-display: 'Antonio', 'Noto Sans TC', sans-serif;
+      --font-body: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      display: flex;
-      flex-direction: column;
+      background-color: var(--bg-current);
+      color: var(--text-current);
+      font-family: var(--font-body);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       overflow-x: hidden;
+      transition: background-color 0.6s ease, color 0.6s ease;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 24px;
-      background-color: #1a1b1f;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 18px;
-      font-weight: 500;
-    }
-
-    .chrome-logo {
-      width: 28px;
-      height: 28px;
-      background: conic-gradient(#ea4335 0 120deg, #4285f4 120deg 240deg, #34a853 240deg 360deg);
-      border-radius: 50%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .chrome-logo::after {
-      content: "";
-      width: 12px;
-      height: 12px;
-      background: #fbbc05;
-      border: 3px solid #fff;
-      border-radius: 50%;
-    }
-
-    .btn-download {
-      background-color: var(--accent-blue);
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background-color 0.2s;
-    }
-
-    .btn-download:hover {
-      background-color: var(--accent-blue-hover);
-    }
-
-    main {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      max-width: 1300px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 40px 32px 20px 32px;
-      align-items: center;
-    }
-
-    /* 淡入淡出轉場設定 */
-    .fade-content {
-      transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .fade-content.fade-out {
-      opacity: 0;
-      transform: translateY(6px);
-    }
-
-    .info-section {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .feature-title {
-      font-size: 36px;
-      font-weight: 600;
-      line-height: 1.25;
-      color: #ffffff;
-      min-height: 90px;
-    }
-
-    .feature-description {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-sub);
-    }
-
-    .steps-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .step-item {
-      font-size: 15px;
-      color: var(--text-sub);
-      display: flex;
-      gap: 8px;
-    }
-
-    .step-num {
-      color: var(--text-sub);
-    }
-
-    .settings-guide {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-top: 10px;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .btn-primary {
-      background-color: var(--accent-pill);
-      color: #040e24;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: opacity 0.2s;
-    }
-
-    .btn-primary:hover {
-      opacity: 0.9;
-    }
-
-    .btn-secondary {
-      background-color: transparent;
-      color: var(--accent-pill);
-      border: 1px solid var(--accent-pill);
-      padding: 10px 24px;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .btn-secondary:hover {
-      background-color: rgba(168, 199, 250, 0.1);
-    }
-
-    .preview-section {
-      width: 100%;
-      height: 420px;
-      background-color: #28292e;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      border: 1px solid var(--border-color);
-      cursor: zoom-in;
-    }
-
-    .preview-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .carousel-container {
-      max-width: 1300px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 32px 32px 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .cards-wrapper {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      flex: 1;
-      padding-bottom: 8px;
-    }
-
-    .cards-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .cards-wrapper::-webkit-scrollbar-thumb {
-      background: var(--border-color);
-      border-radius: 3px;
-    }
-
-    .card {
-      min-width: 240px;
-      height: 90px;
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .card:hover {
-      background-color: var(--card-hover);
-    }
-
-    .card.active {
-      background-color: var(--card-active);
-      border-color: var(--accent-pill);
-    }
-
-    .card-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      max-width: 130px;
-    }
-
-    .card-subtitle {
-      font-size: 12px;
-      color: var(--accent-pill);
-      font-weight: 500;
-    }
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-main);
-      line-height: 1.3;
-    }
-
-    .card-thumb {
-      width: 80px;
-      height: 64px;
-      border-radius: 6px;
-      background-color: #333;
-      object-fit: cover;
-    }
-
-    .nav-arrow {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #2b2c30;
-      border: none;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: background-color 0.2s;
-    }
-
-    .nav-arrow:hover {
-      background-color: #3d3e44;
-    }
-
-    /* 圖片放大 modal 樣式 */
-    .modal-overlay {
+    /* --- 開場 Splash 校徽旋轉放大遮罩動畫 --- */
+    #splash-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
+      background-color: #004b3a;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity 0.5s ease 0.4s, visibility 0.5s ease 0.4s;
+    }
+
+    #splash-text {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      text-align: center;
+      max-width: 800px;
+      line-height: 1.2;
+      padding: 0 20px;
+      margin-bottom: 40px;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .highlight-teal {
+      color: #003327;
+      background: #80ed99;
+      padding: 2px 8px;
+    }
+
+    /* 校徽 Logo 元素 */
+    #splash-logo {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.5s ease;
+      will-change: transform;
+    }
+
+    #splash-screen.start-zoom #splash-text {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    #splash-screen.start-zoom #splash-logo {
+      transform: rotate(180deg) scale(45);
+    }
+
+    #splash-screen.fade-off {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* --- 畫面兩側固定控制按鈕 --- */
+    .brand-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 9999px;
+      background-color: var(--btn-bg-current);
+      color: var(--btn-text-current);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 100;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease, background-color 0.6s ease;
+    }
+
+    .brand-circle:hover {
+      transform: scale(1.1);
+    }
+
+    .brand-circle img { width: 26px; height: 26px; }
+
+    /* 右側集章活動帶文字膠囊按鈕 (Pill Action Button) */
+    .stamp-pill-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100;
+      height: 50px;
+      padding: 0 20px 0 16px;
+      border-radius: 9999px;
+      background-color: var(--btn-bg-current);
+      color: var(--btn-text-current);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease, background-color 0.6s ease, box-shadow 0.2s ease;
+    }
+
+    .stamp-pill-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .stamp-pill-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Header */
+    header {
+      padding: 36px 90px 10px 90px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .school-tag {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--title-current);
+      transition: color 0.6s ease;
+    }
+
+    .event-title {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    /* Main Showcase Layout */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 90px;
+      align-items: center;
+    }
+
+    .info-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .info-section.fade-out {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .pill-tag {
+      background-color: var(--pill-bg-current);
+      color: var(--pill-text-current);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      margin-bottom: 20px;
+      transition: background-color 0.6s ease, color 0.6s ease;
+    }
+
+    .display-title {
+      font-family: var(--font-display);
+      font-size: 96px;
+      font-weight: 900;
+      line-height: 0.85;
+      color: var(--title-current);
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      transition: color 0.6s ease;
+    }
+
+    .description-text {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 50ch;
+      margin-bottom: 24px;
+      opacity: 0.95;
+    }
+
+    .teacher-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .teacher-item {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .teacher-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--title-current);
+      transition: background-color 0.6s ease;
+    }
+
+    .guide-quote {
+      font-size: 15px;
+      font-weight: 600;
+      font-style: italic;
+      border-left: 4px solid var(--title-current);
+      padding-left: 14px;
+      opacity: 0.95;
+      transition: border-color 0.6s ease;
+    }
+
+    /* Vertical Editorial Card Container */
+    .card-stage {
+      position: relative;
+      width: 100%;
+      height: 540px;
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
+    .vertical-card {
+      position: absolute;
+      width: 340px;
+      height: 480px;
+      background-color: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      border: 4px solid #fff;
     }
 
-    .modal-content {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-      transform: scale(0.95);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: zoom-out;
+    .vertical-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .modal-overlay.active .modal-content {
-      transform: scale(1);
-    }
-
-    .modal-close {
+    .card-overlay-title {
       position: absolute;
       top: 24px;
-      right: 32px;
+      left: 24px;
+      right: 24px;
+      font-family: var(--font-display);
       font-size: 36px;
+      font-weight: 900;
       color: #ffffff;
-      cursor: pointer;
-      background: none;
-      border: none;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 4px rgba(0,0,0,0.5);
       line-height: 1;
-      transition: opacity 0.2s;
     }
 
-    .modal-close:hover {
-      opacity: 0.7;
+    .vertical-card.active {
+      transform: translateX(0) scale(1.05);
+      z-index: 3;
+      opacity: 1;
+      border-color: var(--title-current);
     }
+
+    .vertical-card.prev {
+      transform: translateX(-140px) scale(0.88);
+      z-index: 2;
+      opacity: 0.6;
+    }
+
+    .vertical-card.next {
+      transform: translateX(140px) scale(0.88);
+      z-index: 2;
+      opacity: 0.6;
+    }
+
+    .vertical-card.hidden {
+      transform: translateX(0) scale(0.7);
+      z-index: 1;
+      opacity: 0;
+    }
+
+    /* Carousel Nav Bar */
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 40px;
+    }
+
+    .arrow-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      background: transparent;
+      color: inherit;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .arrow-btn:hover {
+      background-color: var(--btn-bg-current);
+      border-color: var(--btn-bg-current);
+      color: var(--btn-text-current);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 1000; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 12px; }
 
     @media (max-width: 900px) {
-      main {
-        grid-template-columns: 1fr;
-        padding-top: 20px;
-      }
-
-      .preview-section {
-        height: 300px;
-      }
+      header, main { padding-left: 24px; padding-right: 24px; }
+      main { grid-template-columns: 1fr; }
+      .display-title { font-size: 64px; }
+      .vertical-card.prev { transform: translateX(-60px) scale(0.85); }
+      .vertical-card.next { transform: translateX(60px) scale(0.85); }
+      .stamp-pill-btn span { display: none; } /* 行動裝置上自動折疊文字，保持畫面乾淨 */
+      .stamp-pill-btn { padding: 0 14px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="brand">
-        <img src="https://jsh.dafuntea.com/去背的下載.png" style="height: 24px;" alt="">
-      <span>弘明實驗高級中學 <br>美術教學參觀日</span>
+  <!-- 1. 開場 Splash 動畫 (校徽旋轉放大遮罩) -->
+  <div id="splash-screen">
+    <div id="splash-text">
+      放慢步調，探索藝術靈魂。<br>
+      <span class="highlight-teal">青綠未央</span> 115美術教學參觀日
     </div>
-    <p style="cursor: pointer;text-decoration: underline;" title="點按前往集章活動頁面" onclick="location.href='https://artcoc.dafuntea.com'">集章活動</p>
-  </header>
-
-  <main>
-    <div class="info-section fade-content" id="info-section">
-      <h1 class="feature-title" id="main-title">載入中...</h1>
-      <p class="feature-description" id="main-description"></p>
-      
-      <div class="steps-list" id="main-steps"></div>
-      
-      <p class="settings-guide" id="main-guide"></p>
-    </div>
-
-    <div class="preview-section" id="preview-container" title="點擊放大檢視">
-      <img id="main-preview-img" class="preview-image fade-content" src="" alt="Feature Preview">
-    </div>
-  </main>
-
-  <div class="carousel-container">
-    <button class="nav-arrow" id="btn-prev">❮</button>
-    <div class="cards-wrapper" id="cards-container"></div>
-    <button class="nav-arrow" id="btn-next">❯</button>
+    <img id="splash-logo" src="img/logo遮罩.png" alt="校徽">
   </div>
 
-  <!-- 放大檢視 Modal 燈箱 -->
+  <!-- 2. 畫面上方固定控制按鈕與膠囊連結 -->
+  <button class="brand-circle" title="弘明實驗高級中學" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <img src="https://jsh.dafuntea.com/%E5%8E%BB%E8%83%8C%E7%9A%84%E4%B8%8B%E8%BC%89.png" alt="Logo">
+  </button>
+
+  <a class="stamp-pill-btn" href="https://artcoc.dafuntea.com" title="前往集章活動頁面">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2A10 10 0 1 0 22 12 10 10 0 0 0 12 2Zm1 15h-2v-6h2Zm0-8h-2V7h2Z"/>
+    </svg>
+    <span>集章活動頁面</span>
+  </a>
+
+  <!-- Header -->
+  <header>
+    <div>
+      <div class="school-tag">弘明實驗高級中學</div>
+      <div class="event-title">美術教學參觀日</div>
+    </div>
+  </header>
+
+  <!-- Main Showcase -->
+  <main>
+    <div class="info-section" id="info-section">
+      <div class="pill-tag" id="pill-tag">載入中</div>
+      <h1 class="display-title" id="main-title">青綠未央</h1>
+      <p class="description-text" id="main-description"></p>
+      
+      <div class="teacher-list" id="main-steps"></div>
+      
+      <p class="guide-quote" id="main-guide"></p>
+    </div>
+
+    <!-- 直式 3D 卡片滑台 -->
+    <div class="card-stage" id="card-stage"></div>
+  </main>
+
+  <div class="carousel-nav">
+    <button class="arrow-btn" id="btn-prev">❮</button>
+    <button class="arrow-btn" id="btn-next">❯</button>
+  </div>
+
+  <!-- Modal -->
   <div class="modal-overlay" id="image-modal">
-    <button class="modal-close" id="modal-close-btn">&times;</button>
-    <img class="modal-content" id="modal-img" src="" alt="Zoomed Preview">
+    <img class="modal-img" id="modal-img" src="" alt="Zoomed">
   </div>
 
   <script>
+    const themeColors = [
+      {
+        bg: '#f4f9f8',
+        text: '#0d3b2e',
+        title: '#006052',
+        pillBg: 'rgba(0, 122, 104, 0.12)',
+        pillText: '#006052',
+        btnBg: '#008f7a',
+        btnText: '#ffffff'
+      },
+      {
+        bg: '#082820',
+        text: '#e0f2ed',
+        title: '#52b788',
+        pillBg: 'rgba(82, 183, 136, 0.2)',
+        pillText: '#74c69d',
+        btnBg: '#2a9d8f',
+        btnText: '#ffffff'
+      },
+      {
+        bg: '#004d40',
+        text: '#e0f7fa',
+        title: '#80cbc4',
+        pillBg: 'rgba(128, 203, 196, 0.2)',
+        pillText: '#b2dfdb',
+        btnBg: '#00796b',
+        btnText: '#ffffff'
+      },
+      {
+        bg: '#1b3b36',
+        text: '#d8f3dc',
+        title: '#74c69d',
+        pillBg: 'rgba(116, 198, 157, 0.2)',
+        pillText: '#95d5b2',
+        btnBg: '#40916c',
+        btnText: '#ffffff'
+      },
+      {
+        bg: '#eef9f6',
+        text: '#064e3b',
+        title: '#047857',
+        pillBg: 'rgba(4, 120, 87, 0.12)',
+        pillText: '#065f46',
+        btnBg: '#059669',
+        btnText: '#ffffff'
+      }
+    ];
+
     let cardsData = [];
     let currentIndex = 0;
-    let isTransitioning = false; // 防止快速連續點擊造成的動畫衝突
 
     const infoSection = document.getElementById('info-section');
+    const pillTag = document.getElementById('pill-tag');
     const mainTitle = document.getElementById('main-title');
     const mainDescription = document.getElementById('main-description');
     const mainSteps = document.getElementById('main-steps');
     const mainGuide = document.getElementById('main-guide');
-    const mainPreviewImg = document.getElementById('main-preview-img');
-    const cardsContainer = document.getElementById('cards-container');
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
-
-    // Modal 元件
-    const previewContainer = document.getElementById('preview-container');
-    const imageModal = document.getElementById('image-modal');
-    const modalImg = document.getElementById('modal-img');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const cardStage = document.getElementById('card-stage');
+    const splashScreen = document.getElementById('splash-screen');
 
     async function initApp() {
+      // 1. 開場旋轉與放大遮罩動畫流程
+      setTimeout(() => {
+        splashScreen.classList.add('start-zoom');
+      }, 1000);
+
+      setTimeout(() => {
+        splashScreen.classList.add('fade-off');
+      }, 2100);
+
+      // 2. 讀取 JSON 資料
       try {
-        const response = await fetch('data.json');
-        if (!response.ok) {
-          throw new Error(`HTTP 錯誤！狀態碼: ${response.status}`);
-        }
-        cardsData = await response.json();
-        
+        const res = await fetch('data.json');
+        cardsData = await res.json();
         if (cardsData.length > 0) {
-          renderCards(cardsData);
-          selectCard(0, false); // 首次載入不播放淡出
+          renderVerticalCards();
+          updateCardDisplay(0, false);
         }
-      } catch (error) {
-        console.error('無法載入卡片資料:', error);
-        mainTitle.textContent = '資料載入失敗';
-        mainDescription.textContent = '請檢查 data.json 檔案路徑或本地伺服器環境。';
+      } catch (err) {
+        mainTitle.textContent = "載入失敗";
       }
     }
 
-    function renderCards(data) {
-      cardsContainer.innerHTML = '';
-      data.forEach((item, index) => {
-        const cardEl = document.createElement('div');
-        cardEl.className = `card ${index === currentIndex ? 'active' : ''}`;
-        cardEl.onclick = () => selectCard(index);
+    function renderVerticalCards() {
+      cardStage.innerHTML = '';
+      cardsData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'vertical-card hidden';
+        card.dataset.index = index;
+        card.onclick = () => updateCardDisplay(index);
 
-        cardEl.innerHTML = `
-          <div class="card-info">
-            <span class="card-subtitle">${item.cardSubtitle}</span>
-            <span class="card-title">${item.cardTitle}</span>
-          </div>
-          <img class="card-thumb" src="${item.cardImage}" alt="${item.cardTitle}">
+        card.innerHTML = `
+          <div class="card-overlay-title">${item.cardTitle || item.mainTitle}</div>
+          <img src="${item.previewImage || item.cardImage}" alt="${item.mainTitle}">
         `;
-
-        cardsContainer.appendChild(cardEl);
+        cardStage.appendChild(card);
       });
     }
 
-    function selectCard(index, animate = true) {
-      if (!cardsData || cardsData.length === 0 || isTransitioning) return;
-
+    function updateCardDisplay(index, animate = true) {
       currentIndex = index;
       const data = cardsData[currentIndex];
 
-      // 更新下方卡片選取狀態
-      const allCards = cardsContainer.querySelectorAll('.card');
+      const theme = themeColors[currentIndex % themeColors.length];
+      document.documentElement.style.setProperty('--bg-current', theme.bg);
+      document.documentElement.style.setProperty('--text-current', theme.text);
+      document.documentElement.style.setProperty('--title-current', theme.title);
+      document.documentElement.style.setProperty('--pill-bg-current', theme.pillBg);
+      document.documentElement.style.setProperty('--pill-text-current', theme.pillText);
+      document.documentElement.style.setProperty('--btn-bg-current', theme.btnBg);
+      document.documentElement.style.setProperty('--btn-text-current', theme.btnText);
+
+      const allCards = cardStage.querySelectorAll('.vertical-card');
+      const total = cardsData.length;
+
       allCards.forEach((card, idx) => {
+        card.className = 'vertical-card';
         if (idx === currentIndex) {
           card.classList.add('active');
-          card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else if (idx === (currentIndex - 1 + total) % total) {
+          card.classList.add('prev');
+        } else if (idx === (currentIndex + 1) % total) {
+          card.classList.add('next');
         } else {
-          card.classList.remove('active');
+          card.classList.add('hidden');
         }
       });
 
-      // 更新內容的內部函式
-      const updateContent = () => {
+      const updateText = () => {
+        pillTag.textContent = data.cardSubtitle || '展演內容';
         mainTitle.textContent = data.mainTitle;
         mainDescription.textContent = data.mainDescription;
-        mainGuide.textContent = data.settingsGuide;
-        mainPreviewImg.src = data.previewImage;
+        mainGuide.textContent = data.settingsGuide || '';
 
         mainSteps.innerHTML = '';
-        if (data.steps && data.steps.length > 0) {
-          data.steps.forEach((step, idx) => {
-            const stepEl = document.createElement('div');
-            stepEl.className = 'step-item';
-            stepEl.innerHTML = `<span class="step-num">${idx + 1}.</span> <span>${step}</span>`;
-            mainSteps.appendChild(stepEl);
+        if (data.steps) {
+          data.steps.forEach(step => {
+            const item = document.createElement('div');
+            item.className = 'teacher-item';
+            item.innerHTML = `<span class="teacher-dot"></span><span>${step}</span>`;
+            mainSteps.appendChild(item);
           });
         }
       };
 
       if (animate) {
-        isTransitioning = true;
-        // 1. 淡出
         infoSection.classList.add('fade-out');
-        mainPreviewImg.classList.add('fade-out');
-
-        // 2. 等待淡出 completion (250ms) 後替換內容，再淡入
         setTimeout(() => {
-          updateContent();
+          updateText();
           infoSection.classList.remove('fade-out');
-          mainPreviewImg.classList.remove('fade-out');
-          isTransitioning = false;
         }, 250);
       } else {
-        updateContent();
+        updateText();
       }
     }
 
-    btnPrev.addEventListener('click', () => {
-      if (cardsData.length === 0 || isTransitioning) return;
-      let newIndex = currentIndex - 1;
-      if (newIndex < 0) newIndex = cardsData.length - 1;
-      selectCard(newIndex);
-    });
+    document.getElementById('btn-prev').onclick = () => {
+      let idx = currentIndex - 1;
+      if (idx < 0) idx = cardsData.length - 1;
+      updateCardDisplay(idx);
+    };
 
-    btnNext.addEventListener('click', () => {
-      if (cardsData.length === 0 || isTransitioning) return;
-      let newIndex = currentIndex + 1;
-      if (newIndex >= cardsData.length) newIndex = 0;
-      selectCard(newIndex);
-    });
+    document.getElementById('btn-next').onclick = () => {
+      let idx = (currentIndex + 1) % cardsData.length;
+      updateCardDisplay(idx);
+    };
 
-    // Modal 邏輯
-    function openModal() {
-      if (!mainPreviewImg.src) return;
-      modalImg.src = mainPreviewImg.src;
-      imageModal.classList.add('active');
-    }
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
 
-    function closeModal() {
-      imageModal.classList.remove('active');
-    }
-
-    previewContainer.addEventListener('click', openModal);
-    modalCloseBtn.addEventListener('click', closeModal);
-
-    imageModal.addEventListener('click', (e) => {
-      if (e.target === imageModal || e.target === modalImg) {
-        closeModal();
+    cardStage.addEventListener('click', (e) => {
+      const activeCard = e.target.closest('.vertical-card.active');
+      if (activeCard) {
+        const img = activeCard.querySelector('img');
+        modalImg.src = img.src;
+        modal.classList.add('active');
       }
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && imageModal.classList.contains('active')) {
-        closeModal();
-      }
-    });
+    modal.onclick = () => modal.classList.remove('active');
 
     initApp();
   </script>
