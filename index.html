@@ -343,7 +343,6 @@
       border-color: var(--title-current);
     }
 
-    /* 電腦版增加傾斜角度 */
     .vertical-card.prev {
       transform: translateX(-140px) rotate(-12deg) scale(0.85);
       z-index: 2;
@@ -407,7 +406,7 @@
     .modal-overlay.active { opacity: 1; visibility: visible; }
     .modal-img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 12px; }
 
-    /* Mobile Layout — 強化兩側卡片傾斜效果 */
+    /* Mobile Layout */
     @media (max-width: 899px) {
       header {
         display: none;
@@ -494,7 +493,6 @@
         transform: translateX(0) rotate(0deg) scale(1);
       }
 
-      /* 手機版顯著提高左右卡片的傾斜角度與偏移 */
       .vertical-card.prev {
         transform: translateX(-65px) translateY(10px) rotate(-15deg) scale(0.82);
         opacity: 0.45;
@@ -524,7 +522,8 @@
   <div id="splash-screen">
     <div id="splash-text">
       放慢步調，探索藝術靈魂。<br>
-      <span class="highlight-teal">青綠未央</span> 115美術教學參觀日
+      <span class="highlight-teal">青綠未央</span> 115美術教學參觀日<br>
+      <span style="font-size: 12px;">網頁載入中</span>
     </div>
     <img id="splash-logo" src="img/logo遮罩.png" alt="校徽">
   </div>
@@ -537,7 +536,7 @@
     <span>集章活動頁面</span>
   </a>
 
-  <!-- Header with Integrated Logo in H1 (手機版隱藏) -->
+  <!-- Header with Integrated Logo in H1 -->
   <header>
     <a href="javascript:void(0)" onclick="location.reload()" class="brand-h1" title="點擊重新載入頁面">
       <img class="header-logo" src="https://jsh.dafuntea.com/%E5%8E%BB%E8%83%8C%E7%9A%84%E4%B8%8B%E8%BC%89.png" alt="Logo">
@@ -635,19 +634,31 @@
     const splashScreen = document.getElementById('splash-screen');
 
     async function initApp() {
-      setTimeout(() => splashScreen.classList.add('start-zoom'), 800);
-      setTimeout(() => splashScreen.classList.add('fade-off'), 1900);
+      // 定義 JSON 資料讀取任務
+      const loadDataPromise = fetch('data.json')
+        .then(res => res.json())
+        .then(data => {
+          cardsData = data;
+          if (cardsData.length > 0) {
+            renderVerticalCards();
+            updateCardDisplay(0, false);
+          }
+        })
+        .catch(err => {
+          mainTitle.textContent = "載入失敗";
+        });
 
-      try {
-        const res = await fetch('data.json');
-        cardsData = await res.json();
-        if (cardsData.length > 0) {
-          renderVerticalCards();
-          updateCardDisplay(0, false);
-        }
-      } catch (err) {
-        mainTitle.textContent = "載入失敗";
-      }
+      // 保留最少 1000ms 閱讀時間，確保載入極快時開場文字不會閃退
+      const minDisplayPromise = new Promise(resolve => setTimeout(resolve, 1000));
+
+      // 等待資料讀取完畢與最少停留時間皆達成
+      await Promise.all([loadDataPromise, minDisplayPromise]);
+
+      // 觸發 Splash 旋轉放大與退場
+      splashScreen.classList.add('start-zoom');
+      setTimeout(() => {
+        splashScreen.classList.add('fade-off');
+      }, 1100);
 
       bindSwipeEvents();
     }
