@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>青綠未央 — 115美術教學參觀日</title>
   <link rel="icon" type="image/png" href="https://jsh.dafuntea.com/%E5%8E%BB%E8%83%8C%E7%9A%84%E4%B8%8B%E8%BC%89.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,6 @@
   
   <style>
     :root {
-      /* 預設動態變數 */
       --bg-current: #f4f9f8;
       --text-current: #0d3b2e;
       --title-current: #007a68;
@@ -28,33 +27,41 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow: hidden;
     }
 
     body {
       background-color: var(--bg-current);
       color: var(--text-current);
       font-family: var(--font-body);
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
+      justify-content: space-between;
       transition: background-color 0.6s ease, color 0.6s ease;
     }
 
-    /* --- 開場 Splash 校徽旋轉放大遮罩動畫 --- */
+    /* Splash Screen */
     #splash-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #004b3a;
+      height: 100dvh;
+      background-color: #ffffff;
       z-index: 9999;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
+      color: #004b3a;
       overflow: hidden;
       pointer-events: none;
       transition: opacity 0.5s ease 0.4s, visibility 0.5s ease 0.4s;
@@ -73,18 +80,18 @@
     }
 
     .highlight-teal {
-      color: #003327;
-      background: #80ed99;
+      color: #ffffff;
+      background: #007a68;
       padding: 2px 8px;
     }
 
-    /* 校徽 Logo 元素 */
     #splash-logo {
       width: 140px;
       height: 140px;
       object-fit: contain;
-      transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.5s ease;
-      will-change: transform;
+      filter: none;
+      transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), filter 1.2s ease, opacity 0.5s ease;
+      will-change: transform, filter;
     }
 
     #splash-screen.start-zoom #splash-text {
@@ -94,6 +101,7 @@
 
     #splash-screen.start-zoom #splash-logo {
       transform: rotate(180deg) scale(45);
+      filter: brightness(0) invert(26%) sepia(85%) saturate(1450%) hue-rotate(130deg);
     }
 
     #splash-screen.fade-off {
@@ -101,103 +109,109 @@
       visibility: hidden;
     }
 
-    /* --- 畫面兩側固定控制按鈕 --- */
-    .brand-circle {
-      width: 50px;
-      height: 50px;
-      border-radius: 9999px;
-      background-color: var(--btn-bg-current);
-      color: var(--btn-text-current);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 100;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s ease, background-color 0.6s ease;
-    }
-
-    .brand-circle:hover {
-      transform: scale(1.1);
-    }
-
-    .brand-circle img { width: 26px; height: 26px; }
-
-    /* 右側集章活動帶文字膠囊按鈕 (Pill Action Button) */
+    /* Top Right Action Button */
     .stamp-pill-btn {
       position: fixed;
-      top: 24px;
-      right: 24px;
+      top: 20px;
+      right: 20px;
       z-index: 100;
-      height: 50px;
-      padding: 0 20px 0 16px;
+      height: 44px;
+      padding: 0 16px;
       border-radius: 9999px;
       background-color: var(--btn-bg-current);
       color: var(--btn-text-current);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       text-decoration: none;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       letter-spacing: 0.02em;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
       transition: transform 0.2s ease, background-color 0.6s ease, box-shadow 0.2s ease;
     }
 
     .stamp-pill-btn:hover {
       transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     }
 
     .stamp-pill-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: currentColor;
       flex-shrink: 0;
     }
 
-    /* Header */
+    /* Header & Integrated Logo H1 */
     header {
-      padding: 36px 90px 10px 90px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
+      padding: 20px 40px 0 40px;
       max-width: 1440px;
       width: 100%;
       margin: 0 auto;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .brand-h1 {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-h1:hover .header-logo {
+      transform: rotate(15deg) scale(1.05);
+    }
+
+    .header-logo {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: 50%;
+      background-color: var(--btn-bg-current);
+      padding: 6px;
+      transition: transform 0.3s ease, background-color 0.6s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
     }
 
     .school-tag {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--title-current);
       transition: color 0.6s ease;
+      line-height: 1.1;
     }
 
     .event-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
+      line-height: 1.1;
     }
 
-    /* Main Showcase Layout */
+    /* Main Content */
     main {
       flex: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      gap: 40px;
       max-width: 1440px;
       width: 100%;
       margin: 0 auto;
-      padding: 40px 90px;
+      padding: 20px 40px;
       align-items: center;
+      min-height: 0;
     }
 
     .info-section {
@@ -205,6 +219,7 @@
       flex-direction: column;
       align-items: flex-start;
       transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 2;
     }
 
     .info-section.fade-out {
@@ -217,86 +232,89 @@
       color: var(--pill-text-current);
       font-size: 13px;
       font-weight: 800;
-      padding: 6px 16px;
+      padding: 4px 14px;
       border-radius: 9999px;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
       transition: background-color 0.6s ease, color 0.6s ease;
     }
 
     .display-title {
       font-family: var(--font-display);
-      font-size: 96px;
+      font-size: 80px;
       font-weight: 900;
-      line-height: 0.85;
+      line-height: 0.9;
       color: var(--title-current);
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       letter-spacing: -0.02em;
       text-transform: uppercase;
       transition: color 0.6s ease;
     }
 
     .description-text {
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.6;
       max-width: 50ch;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       opacity: 0.95;
     }
 
     .teacher-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-bottom: 24px;
+      gap: 6px;
+      margin-bottom: 16px;
     }
 
     .teacher-item {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .teacher-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background-color: var(--title-current);
       transition: background-color 0.6s ease;
     }
 
     .guide-quote {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       font-style: italic;
-      border-left: 4px solid var(--title-current);
-      padding-left: 14px;
+      border-left: 3px solid var(--title-current);
+      padding-left: 12px;
       opacity: 0.95;
       transition: border-color 0.6s ease;
     }
 
-    /* Vertical Editorial Card Container */
+    /* Desktop Card Stage */
     .card-stage {
       position: relative;
       width: 100%;
-      height: 540px;
+      height: 100%;
+      min-height: 380px;
       display: flex;
       justify-content: center;
       align-items: center;
+      touch-action: pan-y;
     }
 
     .vertical-card {
       position: absolute;
-      width: 340px;
-      height: 480px;
+      width: 320px;
+      height: 450px;
       background-color: #fff;
-      border-radius: 24px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
       cursor: pointer;
-      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, border-color 0.5s ease;
       border: 4px solid #fff;
+      will-change: transform, opacity;
     }
 
     .vertical-card img {
@@ -307,59 +325,62 @@
 
     .card-overlay-title {
       position: absolute;
-      top: 24px;
-      left: 24px;
-      right: 24px;
+      top: 20px;
+      left: 20px;
+      right: 20px;
       font-family: var(--font-display);
-      font-size: 36px;
+      font-size: 32px;
       font-weight: 900;
       color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 4px rgba(0,0,0,0.5);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
       line-height: 1;
     }
 
     .vertical-card.active {
-      transform: translateX(0) scale(1.05);
+      transform: translateX(0) rotate(0deg) scale(1.02);
       z-index: 3;
       opacity: 1;
       border-color: var(--title-current);
     }
 
+    /* 電腦版增加傾斜角度 */
     .vertical-card.prev {
-      transform: translateX(-140px) scale(0.88);
+      transform: translateX(-140px) rotate(-12deg) scale(0.85);
       z-index: 2;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
     .vertical-card.next {
-      transform: translateX(140px) scale(0.88);
+      transform: translateX(140px) rotate(12deg) scale(0.85);
       z-index: 2;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
     .vertical-card.hidden {
-      transform: translateX(0) scale(0.7);
+      transform: translateX(0) rotate(0deg) scale(0.7);
       z-index: 1;
       opacity: 0;
     }
 
-    /* Carousel Nav Bar */
+    /* Navigation Footer */
     .carousel-nav {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20px;
-      padding-bottom: 40px;
+      gap: 16px;
+      padding-bottom: 20px;
+      flex-shrink: 0;
+      z-index: 10;
     }
 
     .arrow-btn {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       border: 2px solid currentColor;
       background: transparent;
       color: inherit;
-      font-size: 20px;
+      font-size: 18px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -373,32 +394,133 @@
       color: var(--btn-text-current);
     }
 
-    /* Modal */
+    /* Image Zoom Modal */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.85);
       display: flex; justify-content: center; align-items: center;
       z-index: 1000; opacity: 0; visibility: hidden;
       transition: opacity 0.3s ease;
+      padding: 20px;
     }
     .modal-overlay.active { opacity: 1; visibility: visible; }
     .modal-img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 12px; }
 
-    @media (max-width: 900px) {
-      header, main { padding-left: 24px; padding-right: 24px; }
-      main { grid-template-columns: 1fr; }
-      .display-title { font-size: 64px; }
-      .vertical-card.prev { transform: translateX(-60px) scale(0.85); }
-      .vertical-card.next { transform: translateX(60px) scale(0.85); }
-      .stamp-pill-btn span { display: none; } /* 行動裝置上自動折疊文字，保持畫面乾淨 */
-      .stamp-pill-btn { padding: 0 14px; }
+    /* Mobile Layout — 強化兩側卡片傾斜效果 */
+    @media (max-width: 899px) {
+      header {
+        display: none;
+      }
+
+      .stamp-pill-btn {
+        top: 14px;
+        right: 14px;
+        height: 38px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 60px 18px 8px 18px;
+        gap: 8px;
+        height: 100dvh;
+        overflow: hidden;
+      }
+
+      .info-section {
+        width: 100%;
+        flex-shrink: 0;
+      }
+
+      .pill-tag {
+        font-size: 11px;
+        padding: 2px 10px;
+        margin-bottom: 6px;
+      }
+
+      .display-title {
+        font-size: 34px;
+        margin-bottom: 6px;
+        line-height: 1;
+      }
+
+      .description-text {
+        font-size: 13px;
+        line-height: 1.4;
+        margin-bottom: 6px;
+      }
+
+      .teacher-list {
+        gap: 4px;
+        margin-bottom: 6px;
+      }
+
+      .teacher-item {
+        font-size: 12px;
+      }
+
+      .guide-quote {
+        font-size: 12px;
+        padding-left: 8px;
+        border-left-width: 2px;
+      }
+
+      .card-stage {
+        flex: 1;
+        min-height: 0;
+        height: auto;
+        padding-bottom: 0;
+      }
+
+      .vertical-card {
+        width: 220px;
+        height: 295px;
+        border-radius: 16px;
+      }
+
+      .card-overlay-title {
+        font-size: 24px;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+      }
+
+      .vertical-card.active {
+        transform: translateX(0) rotate(0deg) scale(1);
+      }
+
+      /* 手機版顯著提高左右卡片的傾斜角度與偏移 */
+      .vertical-card.prev {
+        transform: translateX(-65px) translateY(10px) rotate(-15deg) scale(0.82);
+        opacity: 0.45;
+      }
+
+      .vertical-card.next {
+        transform: translateX(65px) translateY(10px) rotate(15deg) scale(0.82);
+        opacity: 0.45;
+      }
+
+      .carousel-nav {
+        padding-bottom: 12px;
+        gap: 12px;
+      }
+
+      .arrow-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- 1. 開場 Splash 動畫 (校徽旋轉放大遮罩) -->
+  <!-- Splash Screen -->
   <div id="splash-screen">
     <div id="splash-text">
       放慢步調，探索藝術靈魂。<br>
@@ -407,11 +529,7 @@
     <img id="splash-logo" src="img/logo遮罩.png" alt="校徽">
   </div>
 
-  <!-- 2. 畫面上方固定控制按鈕與膠囊連結 -->
-  <button class="brand-circle" title="弘明實驗高級中學" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-    <img src="https://jsh.dafuntea.com/%E5%8E%BB%E8%83%8C%E7%9A%84%E4%B8%8B%E8%BC%89.png" alt="Logo">
-  </button>
-
+  <!-- Top Right Action Button -->
   <a class="stamp-pill-btn" href="https://artcoc.dafuntea.com" title="前往集章活動頁面">
     <svg viewBox="0 0 24 24">
       <path d="M12 2A10 10 0 1 0 22 12 10 10 0 0 0 12 2Zm1 15h-2v-6h2Zm0-8h-2V7h2Z"/>
@@ -419,38 +537,40 @@
     <span>集章活動頁面</span>
   </a>
 
-  <!-- Header -->
+  <!-- Header with Integrated Logo in H1 (手機版隱藏) -->
   <header>
-    <div>
-      <div class="school-tag">弘明實驗高級中學</div>
-      <div class="event-title">美術教學參觀日</div>
-    </div>
+    <a href="javascript:void(0)" onclick="location.reload()" class="brand-h1" title="點擊重新載入頁面">
+      <img class="header-logo" src="https://jsh.dafuntea.com/%E5%8E%BB%E8%83%8C%E7%9A%84%E4%B8%8B%E8%BC%89.png" alt="Logo">
+      <h1 class="header-titles">
+        <span class="school-tag">弘明實驗高級中學</span>
+        <span class="event-title">美術教學參觀日</span>
+      </h1>
+    </a>
   </header>
 
   <!-- Main Showcase -->
-  <main>
+  <main id="swipe-area">
     <div class="info-section" id="info-section">
       <div class="pill-tag" id="pill-tag">載入中</div>
-      <h1 class="display-title" id="main-title">青綠未央</h1>
+      <div class="display-title" id="main-title">青綠未央</div>
       <p class="description-text" id="main-description"></p>
       
       <div class="teacher-list" id="main-steps"></div>
-      
       <p class="guide-quote" id="main-guide"></p>
     </div>
 
-    <!-- 直式 3D 卡片滑台 -->
+    <!-- Cards Container -->
     <div class="card-stage" id="card-stage"></div>
   </main>
 
   <div class="carousel-nav">
-    <button class="arrow-btn" id="btn-prev">❮</button>
-    <button class="arrow-btn" id="btn-next">❯</button>
+    <button class="arrow-btn" id="btn-prev" aria-label="上一頁">❮</button>
+    <button class="arrow-btn" id="btn-next" aria-label="下一頁">❯</button>
   </div>
 
-  <!-- Modal -->
+  <!-- Image Zoom Modal -->
   <div class="modal-overlay" id="image-modal">
-    <img class="modal-img" id="modal-img" src="" alt="Zoomed">
+    <img class="modal-img" id="modal-img" src="" alt="放大檢視">
   </div>
 
   <script>
@@ -515,16 +635,9 @@
     const splashScreen = document.getElementById('splash-screen');
 
     async function initApp() {
-      // 1. 開場旋轉與放大遮罩動畫流程
-      setTimeout(() => {
-        splashScreen.classList.add('start-zoom');
-      }, 1000);
+      setTimeout(() => splashScreen.classList.add('start-zoom'), 800);
+      setTimeout(() => splashScreen.classList.add('fade-off'), 1900);
 
-      setTimeout(() => {
-        splashScreen.classList.add('fade-off');
-      }, 2100);
-
-      // 2. 讀取 JSON 資料
       try {
         const res = await fetch('data.json');
         cardsData = await res.json();
@@ -535,6 +648,8 @@
       } catch (err) {
         mainTitle.textContent = "載入失敗";
       }
+
+      bindSwipeEvents();
     }
 
     function renderVerticalCards() {
@@ -604,23 +719,52 @@
         setTimeout(() => {
           updateText();
           infoSection.classList.remove('fade-out');
-        }, 250);
+        }, 200);
       } else {
         updateText();
       }
     }
 
-    document.getElementById('btn-prev').onclick = () => {
+    // Touch Swipe Events
+    function bindSwipeEvents() {
+      const swipeArea = document.getElementById('swipe-area');
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      swipeArea.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      swipeArea.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+
+      function handleSwipe() {
+        const threshold = 40;
+        if (touchEndX < touchStartX - threshold) {
+          nextCard();
+        } else if (touchEndX > touchStartX + threshold) {
+          prevCard();
+        }
+      }
+    }
+
+    function prevCard() {
       let idx = currentIndex - 1;
       if (idx < 0) idx = cardsData.length - 1;
       updateCardDisplay(idx);
-    };
+    }
 
-    document.getElementById('btn-next').onclick = () => {
+    function nextCard() {
       let idx = (currentIndex + 1) % cardsData.length;
       updateCardDisplay(idx);
-    };
+    }
 
+    document.getElementById('btn-prev').onclick = prevCard;
+    document.getElementById('btn-next').onclick = nextCard;
+
+    // Modal Image Zoom
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('modal-img');
 
